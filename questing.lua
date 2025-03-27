@@ -1,6 +1,4 @@
 do
-    local _ALL_PLAYERS = bj_FORCE_ALL_PLAYERS ---@type force
-
     local _quests = {}
 
     local _quest_data = {
@@ -16,10 +14,13 @@ do
     }
 
     local function AssignQuest()
-        msg = _quest_data.main.message
+        local force = CreateForce()
+        ForceAddPlayer(force, Player(1))
+
+        local msg = _quest_data.main.message
 
         if _quests.main then
-            QuestMessageBJ(_ALL_PLAYERS, bj_QUESTMESSAGE_DISCOVERED, msg)
+            QuestMessageBJ(force, bj_QUESTMESSAGE_DISCOVERED, msg)
             QuestSetDiscovered(_quests.main, true)
         end
     end
@@ -33,8 +34,8 @@ do
         QuestSetDescription(q, data.description)
         QuestSetIconPath(q, data.iconPath)
 
-        for description in data.items do
-            objective = QuestCreateItem(q)
+        for _, description in ipairs(data.items) do
+            local objective = QuestCreateItem(q)
             QuestItemSetDescription(objective, description)
         end
 
@@ -44,9 +45,9 @@ do
     function InitQuests()
         _quests.main = HydrateQuest(CreateQuest(), _quest_data.main)
 
-        trig_quest = CreateTrigger()
+        trig_assignment = CreateTrigger()
 
-        TriggerRegisterTimerEventSingle(trig_quest, bj_QUEUE_DELAY_QUEST)
-        TriggerAddAction(trig_quest, AssignQuest)
+        TriggerRegisterTimerEventSingle(trig_assignment, bj_QUEUE_DELAY_QUEST)
+        TriggerAddAction(trig_assignment, AssignQuest)
     end
 end
