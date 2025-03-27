@@ -10,7 +10,6 @@ do
     local _CPU_RESOURCES = 10000 ---@type number
     local _TOD_SCALE = 0.8 ---@type number
     local _TOD_START = 21.0 ---@type number
-    local _ALL_PLAYERS = bj_FORCE_ALL_PLAYERS ---@type force
 
 
     local _units = {

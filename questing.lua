@@ -1,4 +1,6 @@
 do
+    local _ALL_PLAYERS = bj_FORCE_ALL_PLAYERS ---@type force
+
     local _quests = {}
 
     local _quest_data = {
