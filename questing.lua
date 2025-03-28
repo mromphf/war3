@@ -8,6 +8,7 @@ do
     local _quests = {
         ---@class QuestDefinition
         ---@field data quest | nil
+        ---@field required boolean
         ---@field discovered boolean
         ---@field title string
         ---@field iconPath string
@@ -16,6 +17,7 @@ do
         ---@field items table<integer, string>
         main = {
             data = nil,
+            required = true,
             discovered = false,
             title = "Purity",
             iconPath = "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp",
@@ -23,6 +25,18 @@ do
             message = "|cffffcc00MAIN QUEST|r\nPurity - Destroy Terrordar's green Undead base",
             items = {
                 "Destroy Terrordar's green Undead base"
+            }
+        },
+        rescue = {
+            data = nil,
+            required = false,
+            discovered = false,
+            title = "Nature's Guardians",
+            iconPath = "ReplaceableTextures\\CommandButtons\\BTNDryad.blp",
+            description = "The Scourge's blight has stirred the creatures of the forest from their dens and burrows. The druids and dryads of Ashenvale will join your quest if you help them.",
+            message = "|cffffcc00OPTIONAL QUEST|r\nNature's Guardians - Rescue all Ashenvale Guardians",
+            items = {
+                "Rescue all Ashenvale Guardians"
             }
         }
     }
@@ -61,6 +75,7 @@ do
     local function InitQuest(definition)
         local q = CreateQuest()
 
+        QuestSetRequired(q, definition.required)
         QuestSetDiscovered(q, definition.discovered)
         QuestSetTitle(q, definition.title)
         QuestSetDescription(q, definition.description)
@@ -76,12 +91,22 @@ do
     function InitQuests()
         _players = AllHumanPlayers()
         _quests.main.data = InitQuest( _quests.main)
+        _quests.rescue.data = InitQuest(_quests.rescue)
 
-        local trig_assignment = CreateTrigger()
+        local trig_assignMain = CreateTrigger()
+        local trig_assignRescue = CreateTrigger()
 
-        TriggerRegisterTimerEventSingle(trig_assignment, bj_QUEUE_DELAY_QUEST)
-        TriggerAddAction(trig_assignment, function()
+        TriggerRegisterTimerEventSingle(trig_assignMain, bj_QUEUE_DELAY_QUEST)
+        TriggerAddAction(trig_assignMain, function()
+            DisableTrigger(trig_assignMain)
             AssignQuest(_quests.main)
+        end)
+
+        TriggerRegisterPlayerUnitEvent(trig_assignRescue, Player(2), EVENT_PLAYER_UNIT_RESCUED)
+        TriggerAddAction(trig_assignRescue, function()
+            DisableTrigger(trig_assignRescue)
+            TriggerSleepAction(1.5)
+            AssignQuest(_quests.rescue)
         end)
     end
 end
