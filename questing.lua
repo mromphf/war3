@@ -56,7 +56,7 @@ do
         end
     end
 
-    ---@param definition table
+    ---@param definition QuestDefinition
     ---@return quest
     local function InitQuest(definition)
         local q = CreateQuest()
