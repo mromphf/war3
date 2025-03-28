@@ -41,7 +41,7 @@ do
         }
     }
 
-    local function InitAll()
+    local function InitPlayers()
         players = {
             player = Player(1),
             allies = Player(2),
@@ -50,12 +50,14 @@ do
             neutral_hostile = Player(PLAYER_NEUTRAL_AGGRESSIVE),
             neutral_passive = Player(PLAYER_NEUTRAL_PASSIVE),
         }
+    end
 
+    local function InitUnits()
         units = {
             tree = gg_unit_etol_0003,
-            priestess = gg_unit_E002_0224,
-            dreadlord = gg_unit_Udre_0080,
-            lich = gg_unit_Ulic_0067,
+            --priestess = gg_unit_E002_0224,
+            --dreadlord = gg_unit_Udre_0080,
+            --lich = gg_unit_Ulic_0067,
             mines = {
                 player = gg_unit_ngol_0004
             },
@@ -76,5 +78,6 @@ do
         }
     end
 
-    OnInit.map(InitAll)
+    OnInit.global(InitPlayers)
+    OnInit.map(InitUnits)
 end

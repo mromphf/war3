@@ -1,33 +1,27 @@
 do
+    local cmd_harvest_gold = "autoharvestgold"
+    local cmd_harvest_lumber = "autoharvestlumber"
+    local cmd_entangle_instantly = "entangleinstant"
+
     local function DispatchWorkers(workers)
         for _, worker in ipairs(workers.gold) do
-            IssueImmediateOrderBJ(worker, "autoharvestgold")
+            IssueImmediateOrderBJ(worker, cmd_harvest_gold)
         end
 
         for _, worker in ipairs(workers.lumber) do
-            IssueImmediateOrderBJ(worker, "autoharvestlumber")
+            IssueImmediateOrderBJ(worker, cmd_harvest_lumber)
         end
     end
 
-    function InitWorkers()
+    local function InitWorkers()
         local trig_worker_dispatch = CreateTrigger()
+        IssueTargetOrderBJ(units.tree, cmd_entangle_instantly, units.mines.player)
 
         TriggerRegisterTimerEventSingle(trig_worker_dispatch, 0.5)
         TriggerAddAction(trig_worker_dispatch, function()
-            DispatchWorkers({
-                gold = {
-                    gg_unit_ewsp_0007,
-                    gg_unit_ewsp_0008,
-                    gg_unit_ewsp_0009,
-                    gg_unit_ewsp_0010,
-                    gg_unit_ewsp_0011,
-                },
-                lumber = {
-                    gg_unit_ewsp_0012,
-                    gg_unit_ewsp_0013,
-                    gg_unit_ewsp_0014,
-                }
-            })
+            DispatchWorkers(units.workers)
         end)
     end
+
+    OnInit.final(InitWorkers)
 end

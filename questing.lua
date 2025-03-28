@@ -2,47 +2,11 @@ do
     ---@type integer
     local MAX_PLAYERS = 15
 
-    ---@type force | nil
-    local _players = nil
+    ---@type force
+    local human_players_force
 
-    ---@type leaderboard | nil
-    local _leaderboard = nil
-
-    local _quests = {
-        ---@class QuestDefinition
-        ---@field data quest | nil
-        ---@field required boolean
-        ---@field discovered boolean
-        ---@field title string
-        ---@field iconPath string
-        ---@field description string
-        ---@field message string
-        ---@field items table<integer, string>
-        main = {
-            data = nil,
-            required = true,
-            discovered = false,
-            title = "Purity",
-            iconPath = "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp",
-            description = "The Scourge has brought its blight to Ashenvale under the leadership of the dreadlord Terrordar. Priestess Mira Whitemane leads the night elves on an offensive to drive away the demon's undead army.",
-            message = "|cffffcc00MAIN QUEST|r\nPurity - Destroy Terrordar's green Undead base",
-            items = {
-                "Destroy Terrordar's green Undead base"
-            }
-        },
-        rescue = {
-            data = nil,
-            required = false,
-            discovered = false,
-            title = "Nature's Guardians",
-            iconPath = "ReplaceableTextures\\CommandButtons\\BTNDryad.blp",
-            description = "The Scourge's blight has stirred the creatures of the forest from their dens and burrows. The druids and dryads of Ashenvale will join your quest if you help them.",
-            message = "|cffffcc00OPTIONAL QUEST|r\nNature's Guardians - Rescue all Ashenvale Guardians",
-            items = {
-                "Rescue all Ashenvale Guardians"
-            }
-        }
-    }
+    ---@type leaderboard
+    local _leaderboard
 
     ---@param p player
     ---@return boolean
@@ -68,7 +32,7 @@ do
     ---@param quest QuestDefinition
     local function AssignQuest(quest)
         if quest.data then
-            QuestMessageBJ(_players or AllHumanPlayers(), bj_QUESTMESSAGE_DISCOVERED, quest.message)
+            QuestMessageBJ(human_players_force or AllHumanPlayers(), bj_QUESTMESSAGE_DISCOVERED, quest.message)
             QuestSetDiscovered(quest.data, true)
         end
     end
@@ -91,27 +55,23 @@ do
         return q
     end
 
-    function InitQuests()
-        _players = AllHumanPlayers()
-        _quests.main.data = InitQuest( _quests.main)
-        _quests.rescue.data = InitQuest(_quests.rescue)
-
+    local function InitQuests()
         local trig_assignMain = CreateTrigger()
         local trig_assignRescue = CreateTrigger()
 
         TriggerRegisterTimerEventSingle(trig_assignMain, bj_QUEUE_DELAY_QUEST)
         TriggerAddAction(trig_assignMain, function()
             DisableTrigger(trig_assignMain)
-            AssignQuest(_quests.main)
+            AssignQuest(quests.main)
         end)
 
-        TriggerRegisterPlayerUnitEvent(trig_assignRescue, Player(2), EVENT_PLAYER_UNIT_RESCUED)
+        TriggerRegisterPlayerUnitEvent(trig_assignRescue, players.allies, EVENT_PLAYER_UNIT_RESCUED)
         TriggerAddAction(trig_assignRescue, function()
             DisableTrigger(trig_assignRescue)
-            local pc = Player(1)
-            local allies = Player(2)
+            local pc = players.player
+            local allies = players.allies
 
-            _leaderboard = CreateLeaderboardBJ(_players, "")
+            _leaderboard = CreateLeaderboardBJ(human_players_force, "")
             LeaderboardDisplay(_leaderboard, false)
             LeaderboardAddItemBJ(pc, _leaderboard, "Allies to Rescue",
                 CountUnitsInGroup(GetUnitsOfPlayerAll(allies)))
@@ -120,7 +80,15 @@ do
 
             TriggerSleepAction(1.5)
             LeaderboardDisplay( _leaderboard, true)
-            AssignQuest(_quests.rescue)
+            AssignQuest(quests.rescue)
         end)
     end
+
+    OnInit.map(function()
+        human_players_force = AllHumanPlayers()
+        quests.main.data = InitQuest( quests.main)
+        quests.rescue.data = InitQuest(quests.rescue)
+    end)
+
+    OnInit.final(InitQuests)
 end
