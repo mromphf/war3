@@ -25,7 +25,7 @@ do
         player = Player(1),
         allies = Player(2),
         orange = Player(5),
-        green = Player(7),
+        green = Player(6),
         neutral_hostile = Player(PLAYER_NEUTRAL_AGGRESSIVE),
         neutral_passive = Player(PLAYER_NEUTRAL_PASSIVE),
     }
@@ -54,16 +54,9 @@ do
         SetPlayerAlliance(_players.neutral_hostile, _players.allies, ALLIANCE_PASSIVE, TRUE)
     end
 
-    function InitUnitState()
+    local function InitUnitState()
         SuspendHeroXP(_units.dreadlord, true)
         SuspendHeroXP(_units.lich, true)
-    end
-
-
-    function Etc()
-        location = GetUnitLoc(_units.tree)
-        nearest_mine = MeleeFindNearestMine(location, bj_MELEE_MINE_SEARCH_RADIUS)
-		IssueTargetOrder(_units.tree, "entangleinstant", _units.mine_player)
     end
 
     function InitMap()
@@ -73,8 +66,5 @@ do
         InitEnvironment()
         InitPlayerState()
     	InitUnitState()
-
-        TriggerRegisterTimerEventSingle(trig_etc, 0.1)
-        TriggerAddAction(trig_etc, Etc)
     end
 end
