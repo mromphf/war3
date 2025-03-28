@@ -5,6 +5,9 @@ do
     ---@type force | nil
     local _players = nil
 
+    ---@type leaderboard | nil
+    local _leaderboard = nil
+
     local _quests = {
         ---@class QuestDefinition
         ---@field data quest | nil
@@ -52,7 +55,7 @@ do
     local function AllHumanPlayers()
         local f = CreateForce()
 
-        for n = 0, MAX_PLAYERS do
+        for n = 0, MAX_PLAYERS - 1 do
             local p = Player(n)
             if IsHumanPlaying(p) then
                 ForceAddPlayer(f, p)
@@ -105,7 +108,18 @@ do
         TriggerRegisterPlayerUnitEvent(trig_assignRescue, Player(2), EVENT_PLAYER_UNIT_RESCUED)
         TriggerAddAction(trig_assignRescue, function()
             DisableTrigger(trig_assignRescue)
+            local pc = Player(1)
+            local allies = Player(2)
+
+            _leaderboard = CreateLeaderboardBJ(_players, "")
+            LeaderboardDisplay(_leaderboard, false)
+            LeaderboardAddItemBJ(pc, _leaderboard, "Allies to Rescue",
+                CountUnitsInGroup(GetUnitsOfPlayerAll(allies)))
+            LeaderboardSetPlayerItemLabelColorBJ(pc, _leaderboard, 0, 70, 70, 0)
+            LeaderboardSetPlayerItemValueColorBJ(pc, _leaderboard, 100, 100, 100, 0)
+
             TriggerSleepAction(1.5)
+            LeaderboardDisplay( _leaderboard, true)
             AssignQuest(_quests.rescue)
         end)
     end
