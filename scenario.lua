@@ -18,8 +18,6 @@ do
         SetPlayerState(players.green, PLAYER_STATE_RESOURCE_LUMBER, _CPU_RESOURCES)
         SetPlayerState(players.orange, PLAYER_STATE_RESOURCE_LUMBER, _CPU_RESOURCES)
 
-        SetPlayerHandicapXP(players.player, 0.5)
-
         SetPlayerAlliance(players.green, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
         SetPlayerAlliance(players.orange, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
         SetPlayerAlliance(players.allies, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
@@ -31,8 +29,6 @@ do
     local function InitWorkers()
         local trig_worker_dispatch = CreateTrigger()
         IssueTargetOrderBJ(units.tree, cmd_str.entangleinstant, units.mines.player)
-        SuspendHeroXP(units.dreadlord, true)
-        SuspendHeroXP(units.lich, true)
 
         TriggerRegisterTimerEventSingle(trig_worker_dispatch, 0.5)
         TriggerAddAction(trig_worker_dispatch, function()
@@ -41,10 +37,69 @@ do
         end)
     end
 
+    local function InitDifficulty()
+        diff = GetGameDifficulty()
+
+        if diff == MAP_DIFFICULTY_EASY then
+            SetPlayerHandicap(players.green, 0.8)
+            SetPlayerHandicap(players.orange, 0.8)
+            SetPlayerHandicapXP(players.player, 0.85)
+        end
+
+        if diff == MAP_DIFFICULTY_NORMAL then
+            SetHeroLevel(units.lich, 5, false)
+            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
+            UnitAddItemById(units.lich, FourCC("rin1"))
+
+            SetHeroLevel(units.dreadlord, 7, false)
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUav"))
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUin"))
+            UnitAddItemById(units.dreadlord, FourCC("rde0"))
+            UnitAddItemById(units.dreadlord, FourCC("rat3"))
+
+            SetPlayerHandicapXP(players.player, 0.5)
+        end
+
+        if diff == MAP_DIFFICULTY_HARD or diff == MAP_DIFFICULTY_INSANE then
+            SetHeroLevel(units.lich, 10, false)
+            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
+            IncUnitAbilityLevel(units.lich, FourCC("AUdd"))
+            UnitAddItemById(units.lich, FourCC("rde1"))
+            UnitAddItemById(units.lich, FourCC("rin1"))
+
+            SetHeroLevel(units.dreadlord, 10, false)
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUav"))
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUsl"))
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUcs"))
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUcs"))
+            IncUnitAbilityLevel(units.dreadlord, FourCC("AUin"))
+            UnitAddItemById(units.dreadlord, FourCC("rde2"))
+            UnitAddItemById(units.dreadlord, FourCC("rat9"))
+            UnitAddItemById(units.dreadlord, FourCC("penr"))
+
+            SetResourceAmount(units.gold.player, 10000)
+            SetPlayerHandicapXP(players.player, 0.5)
+        end
+
+        SuspendHeroXP(units.dreadlord, true)
+        SuspendHeroXP(units.lich, true)
+    end
+
     OnInit.map(function()
         InitPlayerState()
         InitEnvironment()
     end)
 
-    OnInit.final(InitWorkers)
+    OnInit.final(function()
+        InitWorkers()
+        InitDifficulty()
+    end)
 end
