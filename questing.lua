@@ -91,7 +91,7 @@ do
         LeaderboardDisplay( leaderboard, true)
         AssignQuest(quests.rescue)
         TriggerSleepAction(bj_QUEUE_DELAY_HINT)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_HINT, "|cff32CD32HINT|r - Rescued allies will not consume food!")
+        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_HINT, hints.general.allies)
     end
 
     local function AssignOrangeQuest()
@@ -109,7 +109,7 @@ do
         SetPlayerAbilityAvailableBJ(true, FourCC("Rers"), players.player)
         SetPlayerAbilityAvailableBJ(true, FourCC("Rehs"), players.player)
         TriggerSleepAction(2)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, "|cff87CEEBNEW UNIT AVAILABLE|r\nMountain Giants")
+        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, hints.new_unit.giant)
     end
 
     local function OnChimeraRescue()
@@ -117,7 +117,7 @@ do
 
         SetPlayerUnitAvailableBJ(FourCC("edos"), true, players.player)
         TriggerSleepAction(2)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, "|cff87CEEBNEW UNIT AVAILABLE|r\nChimeras")
+        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, hints.new_unit.chimera)
     end
 
     local function OnRescueAlly()

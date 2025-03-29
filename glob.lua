@@ -54,6 +54,16 @@ do
         }
     }
 
+    hints = {
+        general = {
+            allies = "|cff32CD32HINT|r - Rescued allies will not consume food!"
+        },
+        new_unit = {
+            giant = "|cff87CEEBNEW UNIT AVAILABLE|r\nMountain Giants",
+            chimera = "|cff87CEEBNEW UNIT AVAILABLE|r\nChimeras"
+        }
+    }
+
     local function InitPlayers()
         players = {
             player = Player(1),
