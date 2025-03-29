@@ -5,6 +5,13 @@ do
     ---@type table<string, player | table <string, player>>
     players = {}
 
+    ---@type table<string, string>
+    cmd_str = {
+        autoharvestgold = "autoharvestgold",
+        autoharvestlumber = "autoharvestlumber",
+        entangleinstant = "entangleinstant",
+    }
+
     ---@type table<string, QuestDefinition>
     quests = {
         ---@class QuestDefinition
