@@ -1,12 +1,12 @@
 do
+    ---@type leaderboard
+    leaderboard = nil
+
     ---@type integer
     local MAX_PLAYERS = 15
 
     ---@type force
     local human_players_force
-
-    ---@type leaderboard
-    local leaderboard
 
     ---@type boolean
     local is_acquired_mountain_giant
@@ -54,6 +54,7 @@ do
 
     ---@param quest QuestDefinition
     function AssignQuest(quest)
+        print(quest)
         if quest.data then
             QuestMessageBJ(human_players_force or AllHumanPlayers(), bj_QUESTMESSAGE_DISCOVERED, quest.message)
             QuestSetDiscovered(quest.data, true)
@@ -154,7 +155,7 @@ do
             CountLivingPlayerUnitsOfTypeId(FourCC(typeId), players.player) <= 1
     end
 
-    local function InitQuests()
+    local function RegisterQuestTrigs()
         local trig_assignMain = CreateTrigger()
         local trig_assignRescue = CreateTrigger()
         local trig_assignOrange = CreateTrigger()
@@ -203,5 +204,5 @@ do
         end
     end)
 
-    OnInit.final(InitQuests)
+    OnInit.final(RegisterQuestTrigs)
 end

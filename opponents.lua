@@ -16,5 +16,11 @@ do
         RegisterResourceTrigger(players.orange, PLAYER_STATE_RESOURCE_LUMBER)
     end
 
+    local function FireAi()
+        StartCampaignAI(players.green, "war3mapImported\\moderate undead.ai")
+        StartCampaignAI(players.orange, "war3mapImported\\spammy undead.ai")
+    end
+
     OnInit.map(RegisterTriggers)
+    OnInit.final(FireAi)
 end

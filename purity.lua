@@ -33,9 +33,28 @@ do
         SuspendHeroXP(units.lich, true)
     end
 
+    local function FireAi()
+        StartCampaignAI(players.green, "war3mapImported\\moderate undead.ai")
+        StartCampaignAI(players.orange, "war3mapImported\\spammy undead.ai")
+    end
+
+    local function InitWorkers()
+        local trig_worker_dispatch = CreateTrigger()
+        IssueTargetOrderBJ(units.tree, cmd_str.entangleinstant, units.mines.player)
+
+        TriggerRegisterTimerEventSingle(trig_worker_dispatch, 0.5)
+        TriggerAddAction(trig_worker_dispatch, function()
+            DispatchUnits(units.workers.gold, cmd_str.autoharvestgold)
+            DispatchUnits(units.workers.lumber, cmd_str.autoharvestlumber)
+        end)
+    end
+
     OnInit.map(function()
         InitPlayerState()
         InitEnvironment()
         InitUnitState()
     end)
+
+    OnInit.final(FireAi)
+    OnInit.final(InitWorkers)
 end
