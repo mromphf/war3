@@ -5,6 +5,7 @@ do
 
     local function InitEnvironment()
         SetFloatGameState(GAME_STATE_TIME_OF_DAY, _TOD_START)
+        SetTerrainFogExBJ(0, 800, 6000, 0.0, 20.0, 40.0, 55.0)
         SetTimeOfDayScale(_TOD_SCALE)
     end
 

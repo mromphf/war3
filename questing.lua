@@ -50,7 +50,7 @@ do
     ---@return quest | nil
     local function InitQuest(definition)
         if not definition then
-            print("ERR: Tried to init quest with no definitione")
+            print("ERR: Tried to init quest with no definition")
             return nil
         end
 
@@ -122,6 +122,7 @@ do
 
     local function OnRescueAlly()
         if IsQuestDiscovered(quests.rescue.data) then
+            SetUnitUseFood(GetTriggerUnit(), false)
             LeaderboardSetItemValue(leaderboard,
                 LeaderboardGetPlayerIndex(leaderboard, players.player),
                 CountUnitsInGroup(GetUnitsOfPlayerAll(players.allies)))
