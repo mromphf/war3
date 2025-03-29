@@ -71,6 +71,24 @@ do
         }
     }
 
+    ---@param cmd string
+    ---@param units table<number, unit>
+    function DispatchUnits(units, cmd)
+        for _, unit in ipairs(units) do
+            IssueImmediateOrderBJ(unit, cmd)
+        end
+    end
+
+    ---@param p player
+    ---@return integer
+    function CountPlayerStructures(p)
+        return CountUnitsInGroup(
+            GetUnitsOfPlayerMatching(p, Condition(
+                IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE))))
+    end
+
+
+
     local function InitPlayers()
         players = {
             player = Player(1),
