@@ -55,9 +55,9 @@ do
     local function InitUnits()
         units = {
             tree = gg_unit_etol_0003,
-            --priestess = gg_unit_E002_0224,
-            --dreadlord = gg_unit_Udre_0080,
-            --lich = gg_unit_Ulic_0067,
+            priestess = gg_unit_E002_0224,
+            dreadlord = gg_unit_Udre_0080,
+            lich = gg_unit_Ulic_0067,
             mines = {
                 player = gg_unit_ngol_0004
             },
