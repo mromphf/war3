@@ -14,6 +14,9 @@ do
     ---@type boolean
     local is_acquired_chimera
 
+    ---@type boolean
+    local is_orange_unassigned
+
     ---@param p player
     ---@return boolean
     local function IsHumanPlaying(p)
@@ -44,8 +47,13 @@ do
     end
 
     ---@param definition QuestDefinition
-    ---@return quest
+    ---@return quest | nil
     local function InitQuest(definition)
+        if not definition then
+            print("ERR: Tried to init quest with no definitione")
+            return nil
+        end
+
         local q = CreateQuest()
 
         QuestSetRequired(q, definition.required)
@@ -72,7 +80,6 @@ do
         LeaderboardSetPlayerItemLabelColorBJ(players.player, lb, 0, 70, 70, 0)
         LeaderboardSetPlayerItemValueColorBJ(players.player, lb, 100, 100, 100, 0)
 
-        print(lb)
         return lb
     end
 
@@ -85,6 +92,13 @@ do
         AssignQuest(quests.rescue)
         TriggerSleepAction(bj_QUEUE_DELAY_HINT)
         QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_HINT, "|cff32CD32HINT|r - Rescued allies will not consume food!")
+    end
+
+    local function AssignOrangeQuest()
+        is_orange_unassigned = false
+
+        TriggerSleepAction(2)
+        AssignQuest(quests.orange)
     end
 
     local function OnMountainGiantRescue()
@@ -124,6 +138,7 @@ do
     local function InitQuests()
         local trig_assignMain = CreateTrigger()
         local trig_assignRescue = CreateTrigger()
+        local trig_assignOrange = CreateTrigger()
         local trig_onRescue = CreateTrigger()
         local trig_onRescueGiant = CreateTrigger()
         local trig_onRescueChimera = CreateTrigger()
@@ -139,6 +154,11 @@ do
             DisableTrigger(trig_assignRescue)
             AssignRescueQuest()
         end)
+
+        TriggerRegisterPlayerUnitEvent(trig_assignOrange, players.orange, EVENT_PLAYER_UNIT_DEATH)
+        TriggerAddCondition(trig_assignOrange, Condition(is_orange_unassigned))
+        TriggerAddAction(trig_assignOrange, AssignOrangeQuest)
+        TriggerAddAction(trig_assignOrange, function() DisableTrigger(trig_assignOrange) end)
 
         TriggerRegisterPlayerUnitEvent(trig_onRescue, players.allies, EVENT_PLAYER_UNIT_RESCUED)
         TriggerAddAction(trig_onRescue, OnRescueAlly)
@@ -159,8 +179,9 @@ do
 
     OnInit.map(function()
         human_players_force = AllHumanPlayers()
-        quests.main.data = InitQuest( quests.main)
-        quests.rescue.data = InitQuest(quests.rescue)
+        for _, def in pairs(quests) do
+            def.data = InitQuest(def)
+        end
     end)
 
     OnInit.final(InitQuests)
