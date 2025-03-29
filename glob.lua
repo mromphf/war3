@@ -5,6 +5,7 @@ do
     ---@type table<string, player | table <string, player>>
     players = {}
 
+    ---@type table<string, QuestDefinition>
     quests = {
         ---@class QuestDefinition
         ---@field data quest | nil
@@ -37,6 +38,18 @@ do
             message = "|cffffcc00OPTIONAL QUEST|r\nNature's Guardians - Rescue all Ashenvale Guardians",
             items = {
                 "Rescue all Ashenvale Guardians"
+            }
+        },
+        orange = {
+            data = nil,
+            required = false,
+            discovered = false,
+            title = "Comorbidity",
+            iconPath = "ReplaceableTextures\\CommandButtons\\BTNLichVersion2.blp",
+            description = "The lich Rage Winterchill leads an ancillary force of undead encroaching upon the forest west of the river. While they represent a smaller threat, destroying their outpost may yield access to additional resources.",
+            message = "|cffffcc00OPTIONAL QUEST|r\nComorbidity - Destroy Rage Winterchill's orange Undead base",
+            items = {
+                "Destroy Rage Winterchill's orange Undead base"
             }
         }
     }
