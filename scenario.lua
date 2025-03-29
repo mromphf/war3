@@ -28,19 +28,11 @@ do
         SetPlayerAlliance(players.neutral_hostile, players.allies, ALLIANCE_PASSIVE, TRUE)
     end
 
-    local function InitUnitState()
-        SuspendHeroXP(units.dreadlord, true)
-        SuspendHeroXP(units.lich, true)
-    end
-
-    local function FireAi()
-        StartCampaignAI(players.green, "war3mapImported\\moderate undead.ai")
-        StartCampaignAI(players.orange, "war3mapImported\\spammy undead.ai")
-    end
-
     local function InitWorkers()
         local trig_worker_dispatch = CreateTrigger()
         IssueTargetOrderBJ(units.tree, cmd_str.entangleinstant, units.mines.player)
+        SuspendHeroXP(units.dreadlord, true)
+        SuspendHeroXP(units.lich, true)
 
         TriggerRegisterTimerEventSingle(trig_worker_dispatch, 0.5)
         TriggerAddAction(trig_worker_dispatch, function()
@@ -52,9 +44,7 @@ do
     OnInit.map(function()
         InitPlayerState()
         InitEnvironment()
-        InitUnitState()
     end)
 
-    OnInit.final(FireAi)
     OnInit.final(InitWorkers)
 end

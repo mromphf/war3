@@ -197,12 +197,12 @@ do
         TriggerAddAction(trig_onRescueChimera, OnChimeraRescue)
     end
 
-    OnInit.map(function()
+    OnInit.final(function()
         human_players_force = AllHumanPlayers()
         for _, def in pairs(quests) do
             def.data = InitQuest(def)
         end
-    end)
 
-    OnInit.final(RegisterQuestTrigs)
+        RegisterQuestTrigs()
+    end)
 end

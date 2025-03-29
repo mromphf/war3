@@ -71,15 +71,6 @@ do
         }
     }
 
-    unit_filters = {
-        is_alive = Condition(function()
-            return IsUnitAliveBJ(GetFilterUnit())
-        end),
-        is_structure = Condition(function()
-            return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE)
-        end)
-    }
-
     ---@param cmd string
     ---@param units table<number, unit>
     function DispatchUnits(units, cmd)
@@ -99,6 +90,7 @@ do
 
     ---@param p player
     ---@param c conditionfunc
+    ---@return integer
     function CountPlayerUnitsBy(p, c)
         return CountUnitsInGroup(GetUnitsOfPlayerMatching(p, c))
     end
@@ -142,5 +134,5 @@ do
     end
 
     OnInit.global(InitPlayers)
-    OnInit.map(InitUnits)
+    OnInit.final(InitUnits)
 end
