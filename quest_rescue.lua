@@ -1,6 +1,6 @@
 do
     ---@type leaderboard
-    local leaderboard = nil
+    local leaderboard
 
     ---@type boolean
     local acquired_mountain_giant
@@ -9,10 +9,9 @@ do
     local acquired_chimera
 
 
-    ---@param f force
     ---@return leaderboard
-    local function InitLeaderboard(f)
-        lb = CreateLeaderboardBJ(f, "")
+    local function InitLeaderboard()
+        lb = CreateLeaderboardBJ(GetPlayersAll(), "")
 
         LeaderboardDisplay(lb, false)
         LeaderboardAddItemBJ(players.player, lb, "Allies to Rescue",
@@ -78,12 +77,12 @@ do
             players.allies, EVENT_PLAYER_UNIT_RESCUED)
 
         TriggerAddAction(trig, function()
-            leaderboard = InitLeaderboard(GetPlayersAll())
-
             DisableTrigger(trig)
+
             TriggerSleepAction(1.5)
-            LeaderboardDisplay( leaderboard, true)
+            LeaderboardDisplay(leaderboard, true)
             AssignQuest(quests.rescue)
+
             TriggerSleepAction(bj_QUEUE_DELAY_HINT)
             Broadcast.Hint("Rescued allies will not cost food!")
         end)
@@ -108,6 +107,7 @@ do
     end
 
     OnInit.trig(function()
+        InitLeaderboard()
         RegisterRescue()
         RegisterAssignment()
         RegisterCompletion()
