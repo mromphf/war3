@@ -32,6 +32,7 @@ do
         TriggerAddAction(t, function()
             DisableTrigger(t)
             TriggerSleepAction(1.5)
+            CompleteQuest(quests.main)
             Broadcast.QuestComplete(quests.orange)
         end)
     end
@@ -51,6 +52,8 @@ do
         TriggerAddAction(trig_victory, function()
             TriggerSleepAction(1.5)
             Broadcast.CompleteQuest(quests.main)
+            CompleteQuest(quests.green)
+            Broadcast.QuestComplete(quests.green)
             TriggerSleepAction(3)
             CustomVictoryBJ(players.player, true, true)
         end)
