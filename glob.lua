@@ -128,7 +128,7 @@ do
     ---@param u unit
     ---@param ... string
     function LearnSkills(u, ...)
-        for _, skill_code in ({...}) do
+        for _, skill_code in pairs({...}) do
             IncUnitAbilityLevel(u,
                 FourCC(skill_code))
         end
@@ -138,7 +138,7 @@ do
     ---@param u unit
     ---@param ... string
     function GiveItems(u, ...)
-        for _, item_code in ({...}) do
+        for _, item_code in pairs({...}) do
             UnitAddItemById(u,
                 FourCC(item_code))
         end
