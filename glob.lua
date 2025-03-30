@@ -83,6 +83,24 @@ do
     end
 
 
+    ---@param p player
+    ---@param gold integer
+    ---@param lumber integer
+    function InitResources(p, gold, lumber)
+        SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold)
+        SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, lumber)
+    end
+
+
+    ---@param ... player[]
+    function AllyAllWithNeutral(...)
+        for _, p in pairs({...}) do
+            SetPlayerAlliance(p, players.neutral_hostile,
+                ALLIANCE_PASSIVE, TRUE)
+        end
+    end
+
+
     local function InitPlayers()
         players = {
             player = Player(1),

@@ -10,20 +10,11 @@ do
     end
 
     local function InitPlayerState()
-        SetPlayerState(players.player, PLAYER_STATE_RESOURCE_GOLD, 300)
-        SetPlayerState(players.green, PLAYER_STATE_RESOURCE_GOLD, _CPU_RESOURCES)
-        SetPlayerState(players.orange, PLAYER_STATE_RESOURCE_GOLD, _CPU_RESOURCES)
+        InitResources(players.player, 300, 100)
+        InitResources(players.green, _CPU_RESOURCES, _CPU_RESOURCES)
+        InitResources(players.orange, _CPU_RESOURCES, _CPU_RESOURCES)
 
-        SetPlayerState(players.player, PLAYER_STATE_RESOURCE_LUMBER, 100)
-        SetPlayerState(players.green, PLAYER_STATE_RESOURCE_LUMBER, _CPU_RESOURCES)
-        SetPlayerState(players.orange, PLAYER_STATE_RESOURCE_LUMBER, _CPU_RESOURCES)
-
-        SetPlayerAlliance(players.green, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
-        SetPlayerAlliance(players.orange, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
-        SetPlayerAlliance(players.allies, players.neutral_hostile, ALLIANCE_PASSIVE, TRUE)
-        SetPlayerAlliance(players.neutral_hostile, players.green, ALLIANCE_PASSIVE, TRUE)
-        SetPlayerAlliance(players.neutral_hostile, players.orange, ALLIANCE_PASSIVE, TRUE)
-        SetPlayerAlliance(players.neutral_hostile, players.allies, ALLIANCE_PASSIVE, TRUE)
+        AllyAllWithNeutral(players.allies, players.green, players.orange)
     end
 
     local function InitWorkers()
