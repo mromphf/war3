@@ -36,9 +36,8 @@ do
         end)
     end
 
-    local function trigsEndgame()
+    local function trigsVictory()
         trig_victory = CreateTrigger()
-        trig_defeat = CreateTrigger()
 
         TriggerRegisterPlayerUnitEvent(trig_victory,
             players.green, EVENT_PLAYER_UNIT_DEATH)
@@ -55,15 +54,18 @@ do
             TriggerSleepAction(3)
             CustomVictoryBJ(players.player, true, true)
         end)
+    end
+
+    local function trigsDefeat()
+        trig_defeat = CreateTrigger()
 
         TriggerRegisterPlayerUnitEvent(trig_defeat,
             players.player, EVENT_PLAYER_UNIT_DEATH)
 
         TriggerAddCondition(trig_defeat, Condition(
-            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
-
-        TriggerAddCondition(trig_defeat, Condition(
-            CountPlayerStructures(players.player) <= 0))
+            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+            CountPlayerStructures(players.player) <= 0
+        ))
 
         TriggerAddAction(trig_defeat, function()
             TriggerSleepAction(1.0)
@@ -71,7 +73,8 @@ do
         end)
     end
 
-    OnInit.trig(trigsEndgame)
+    OnInit.trig(trigsVictory)
+    OnInit.trig(trigsDefeat)
     OnInit.trig(trigsOrangeQuest)
     OnInit.trig(trigsRescueQuest)
 end

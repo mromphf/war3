@@ -163,33 +163,50 @@ do
         local trig_onRescueChimera = CreateTrigger()
 
         TriggerRegisterTimerEventSingle(trig_assignMain, bj_QUEUE_DELAY_QUEST)
+
         TriggerAddAction(trig_assignMain, function()
             DisableTrigger(trig_assignMain)
             AssignQuest(quests.main)
         end)
 
-        TriggerRegisterPlayerUnitEvent(trig_assignRescue, players.allies, EVENT_PLAYER_UNIT_RESCUED)
+        TriggerRegisterPlayerUnitEvent(trig_assignRescue,
+            players.allies, EVENT_PLAYER_UNIT_RESCUED)
+
         TriggerAddAction(trig_assignRescue, function()
             DisableTrigger(trig_assignRescue)
             AssignRescueQuest()
         end)
 
-        TriggerRegisterPlayerUnitEvent(trig_assignOrange, players.orange, EVENT_PLAYER_UNIT_DEATH)
-        TriggerAddCondition(trig_assignOrange, Condition(is_orange_unassigned))
-        TriggerAddAction(trig_assignOrange, AssignOrangeQuest)
-        TriggerAddAction(trig_assignOrange, function() DisableTrigger(trig_assignOrange) end)
+        TriggerRegisterPlayerUnitEvent(trig_assignOrange,
+            players.orange, EVENT_PLAYER_UNIT_DEATH)
 
-        TriggerRegisterPlayerUnitEvent(trig_onRescue, players.allies, EVENT_PLAYER_UNIT_RESCUED)
+        TriggerAddCondition(trig_assignOrange, Condition(
+            is_orange_unassigned))
+
+        TriggerAddAction(trig_assignOrange, AssignOrangeQuest)
+        TriggerAddAction(trig_assignOrange, function()
+            DisableTrigger(trig_assignOrange)
+        end)
+
+        TriggerRegisterPlayerUnitEvent(trig_onRescue,
+            players.allies, EVENT_PLAYER_UNIT_RESCUED)
+
         TriggerAddAction(trig_onRescue, OnRescueAlly)
 
-        TriggerRegisterPlayerUnitEvent(trig_onRescueGiant, players.allies, EVENT_PLAYER_UNIT_RESCUED)
-        TriggerAddCondition(trig_onRescueGiant, Condition(function() return
-            IsNewUnitAcquired(GetTriggerUnit(), "emtg", is_acquired_mountain_giant)
+        TriggerRegisterPlayerUnitEvent(trig_onRescueGiant,
+            players.allies, EVENT_PLAYER_UNIT_RESCUED)
+
+        TriggerAddCondition(trig_onRescueGiant, Condition(function()
+            return IsNewUnitAcquired(
+                GetTriggerUnit(), "emtg", is_acquired_mountain_giant)
         end))
 
-        TriggerRegisterPlayerUnitEvent(trig_onRescueChimera, players.allies, EVENT_PLAYER_UNIT_RESCUED)
-        TriggerAddCondition(trig_onRescueChimera, Condition(function() return
-            IsNewUnitAcquired(GetTriggerUnit(), "echm", is_acquired_chimera)
+        TriggerRegisterPlayerUnitEvent(trig_onRescueChimera,
+            players.allies, EVENT_PLAYER_UNIT_RESCUED)
+
+        TriggerAddCondition(trig_onRescueChimera, Condition(function()
+            return IsNewUnitAcquired(
+                GetTriggerUnit(), "echm", is_acquired_chimera)
         end))
 
         TriggerAddAction(trig_onRescueGiant, OnMountainGiantRescue)
