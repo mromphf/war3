@@ -1,0 +1,55 @@
+do
+    local function TrigsQuest()
+        local trig = CreateTrigger()
+
+        TriggerRegisterTimerEventSingle(trig,
+            bj_QUEUE_DELAY_QUEST)
+
+        TriggerAddAction(trig, function()
+            DisableTrigger(trig)
+            AssignQuest(quests.main)
+        end)
+    end
+
+    local function TrigsVictory()
+        trig = CreateTrigger()
+
+        TriggerRegisterPlayerUnitEvent(trig,
+            players.green, EVENT_PLAYER_UNIT_DEATH)
+
+        TriggerAddCondition(trig, Condition(
+            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+            CountPlayerStructures(players.green) <= 0
+        ))
+
+        TriggerAddAction(trig, function()
+            TriggerSleepAction(1.5)
+            CompleteQuest(quests.green)
+            TriggerSleepAction(3)
+            CustomVictoryBJ(players.player, true, true)
+        end)
+    end
+
+    local function TrigsDefeat()
+        trig = CreateTrigger()
+
+        TriggerRegisterPlayerUnitEvent(trig,
+            players.player, EVENT_PLAYER_UNIT_DEATH)
+
+        TriggerAddCondition(trig, Condition(
+            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+            CountPlayerStructures(players.player) <= 0
+        ))
+
+        TriggerAddAction(trig, function()
+            TriggerSleepAction(1.0)
+            CustomDefeatBJ(players.player "Defeat!")
+        end)
+    end
+
+    OnInit.trig(function()
+        TrigsQuest()
+        TrigsVictory()
+        TrigsDefeat()
+    end)
+end

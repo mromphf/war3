@@ -28,7 +28,10 @@ do
             discovered = false,
             title = "Purity",
             iconPath = "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp",
-            description = "The Scourge has brought its blight to Ashenvale under the leadership of the dreadlord Terrordar. Priestess Mira Whitemane leads the night elves on an offensive to drive away the demon's undead army.",
+            description = "The Scourge has brought its blight to Ashenvale " ..
+                            "under the leadership of the dreadlord Terrordar. " ..
+                            "Priestess Mira Whitemane leads the night elves on an offensive to " ..
+                            "drive away the demon's undead army. ",
             items = {
                 "Destroy Terrordar's green Undead base"
             }
@@ -159,6 +162,7 @@ do
         }
     end
 
+
     local function InitUnits()
         units = {
             tree = gg_unit_etol_0003,
@@ -187,4 +191,9 @@ do
 
     OnInit.global(InitPlayers)
     OnInit.final(InitUnits)
+    OnInit.final(function()
+        for _, def in pairs(quests) do
+            def.data = InitQuest(def)
+        end
+    end)
 end
