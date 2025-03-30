@@ -44,15 +44,10 @@ do
             SetPlayerHandicapXP(players.player, 0.5)
 
             LearnSkills(units.lich,
-                spells.ud.dark_ritual,
-                spells.ud.frost_nova,
-                spells.ud.frost_armor
-            )
+                spells.ud.dark_ritual, spells.ud.frost_nova, spells.ud.frost_armor)
 
             LearnSkills(units.dreadlord,
-                spells.ud.aura_vamp,
-                spells.ud.inferno
-            )
+                spells.ud.aura_vamp, spells.ud.inferno)
 
             GiveItems(units.lich,
                 items.mantle)
@@ -70,21 +65,14 @@ do
             SetHeroLevel(units.dreadlord, 10, false)
 
             LearnSkills(units.lich,
-                spells.ud.dark_ritual,
-                spells.ud.dark_ritual,
-                spells.ud.dark_ritual,
-                spells.ud.frost_nova,
-                spells.ud.frost_nova,
-                spells.ud.frost_armor,
-                spells.ud.frost_armor,
-                spells.ud.death_decay
+                spells.ud.dark_ritual, spells.ud.dark_ritual, spells.ud.dark_ritual,
+                spells.ud.frost_nova, spells.ud.frost_nova, spells.ud.frost_armor,
+                spells.ud.frost_armor, spells.ud.death_decay
             )
 
             LearnSkills(units.dreadlord,
-                spells.ud.aura_vamp,
-                spells.ud.sleep,
-                spells.ud.carrion_swarm,
-                spells.ud.carrion_swarm,
+                spells.ud.aura_vamp, spells.ud.sleep,
+                spells.ud.carrion_swarm, spells.ud.carrion_swarm,
                 spells.ud.inferno
             )
 
