@@ -14,7 +14,7 @@ do
         InitResources(players.green, _CPU_RESOURCES, _CPU_RESOURCES)
         InitResources(players.orange, _CPU_RESOURCES, _CPU_RESOURCES)
 
-        AllyAllWithNeutral(players.allies, players.green, players.orange)
+        AllyWithNeutral(players.allies, players.green, players.orange)
     end
 
     local function InitWorkers()
@@ -35,49 +35,34 @@ do
             SetPlayerHandicap(players.green, 0.8)
             SetPlayerHandicap(players.orange, 0.8)
             SetPlayerHandicapXP(players.player, 0.85)
-        end
 
-        if diff == MAP_DIFFICULTY_NORMAL then
+        elseif diff == MAP_DIFFICULTY_NORMAL then
             SetHeroLevel(units.lich, 5, false)
-            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
-            UnitAddItemById(units.lich, FourCC("rin1"))
-
             SetHeroLevel(units.dreadlord, 7, false)
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUav"))
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUin"))
-            UnitAddItemById(units.dreadlord, FourCC("rde0"))
-            UnitAddItemById(units.dreadlord, FourCC("rat3"))
-
             SetPlayerHandicapXP(players.player, 0.5)
-        end
 
-        if diff == MAP_DIFFICULTY_HARD or diff == MAP_DIFFICULTY_INSANE then
+            LearnSkills(units.lich, "AUdr", "AUfn", "AUfu")
+            LearnSkills(units.dreadlord, "AUav", "AUin")
+
+            GiveItems(units.lich, "rin1")
+            GiveItems(units.dreadlord, "rde0", "rat3")
+
+
+        elseif diff == MAP_DIFFICULTY_HARD or
+                diff == MAP_DIFFICULTY_INSANE then
+            SetResourceAmount(units.mines.player, 10000)
+            SetPlayerHandicapXP(players.player, 0.5)
             SetHeroLevel(units.lich, 10, false)
-            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUdr"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfn"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUfu"))
-            IncUnitAbilityLevel(units.lich, FourCC("AUdd"))
-            UnitAddItemById(units.lich, FourCC("rde1"))
-            UnitAddItemById(units.lich, FourCC("rin1"))
-
             SetHeroLevel(units.dreadlord, 10, false)
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUav"))
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUsl"))
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUcs"))
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUcs"))
-            IncUnitAbilityLevel(units.dreadlord, FourCC("AUin"))
-            UnitAddItemById(units.dreadlord, FourCC("rde2"))
-            UnitAddItemById(units.dreadlord, FourCC("rat9"))
-            UnitAddItemById(units.dreadlord, FourCC("penr"))
 
-            SetResourceAmount(units.gold.player, 10000)
-            SetPlayerHandicapXP(players.player, 0.5)
+            LearnSkills(units.lich,
+                "AUdr", "AUdr", "AUdr", "AUfn", "AUfn", "AUfu", "AUfu", "AUdd")
+
+            LearnSkills(units.dreadlord,
+                "AUav", "AUsl", "AUcs", "AUcs", "AUin")
+
+            GiveItems(units.lich, "rde1", "rin1")
+            GiveItems(units.dreadlord, "rde2", "rat9", "penr")
         end
 
         SuspendHeroXP(units.dreadlord, true)

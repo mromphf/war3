@@ -93,10 +93,30 @@ do
 
 
     ---@param ... player[]
-    function AllyAllWithNeutral(...)
+    function AllyWithNeutral(...)
         for _, p in pairs({...}) do
             SetPlayerAlliance(p, players.neutral_hostile,
                 ALLIANCE_PASSIVE, TRUE)
+        end
+    end
+
+
+    ---@param u unit
+    ---@param ... string
+    function LearnSkills(u, ...)
+        for _, skill_code in ({...}) do
+            IncUnitAbilityLevel(u,
+                FourCC(skill_code))
+        end
+    end
+
+
+    ---@param u unit
+    ---@param ... string
+    function GiveItems(u, ...)
+        for _, item_code in ({...}) do
+            UnitAddItemById(u,
+                FourCC(item_code))
         end
     end
 
