@@ -116,11 +116,14 @@ do
     end
 
 
-    ---@param ... player[]
+    ---@param ... player
     function AllyWithNeutral(...)
         for _, p in pairs({...}) do
             SetPlayerAlliance(p, players.neutral_hostile,
-                ALLIANCE_PASSIVE, TRUE)
+                ALLIANCE_PASSIVE, true)
+
+            SetPlayerAlliance(players.neutral_hostile, p,
+                ALLIANCE_PASSIVE, true)
         end
     end
 

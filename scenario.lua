@@ -87,12 +87,10 @@ do
         SuspendHeroXP(units.lich, true)
     end
 
-    OnInit.map(function()
-        InitPlayerState()
-        InitEnvironment()
-    end)
+    OnInit.map(InitEnvironment)
 
     OnInit.final(function()
+        InitPlayerState()
         InitWorkers()
         InitDifficulty()
     end)
