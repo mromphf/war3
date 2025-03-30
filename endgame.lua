@@ -18,10 +18,12 @@ do
     local function trigsOrangeQuest()
         t = CreateTrigger()
 
-        TriggerRegisterPlayerUnitEvent(t, players.orange, EVENT_PLAYER_UNIT_DEATH)
+        TriggerRegisterPlayerUnitEvent(t,
+            players.orange, EVENT_PLAYER_UNIT_DEATH)
 
         TriggerAddCondition(t, Condition(
             IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
+
         TriggerAddCondition(t, Condition(
             CountPlayerStructures(players.orange) <= 0))
 
@@ -36,9 +38,15 @@ do
         trig_victory = CreateTrigger()
         trig_defeat = CreateTrigger()
 
-        TriggerRegisterPlayerUnitEvent(trig_victory, players.green, EVENT_PLAYER_UNIT_DEATH)
-        TriggerAddCondition(trig_victory, Condition(IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
-        TriggerAddCondition(trig_victory, Condition(CountPlayerStructures(players.green) <= 0))
+        TriggerRegisterPlayerUnitEvent(trig_victory,
+            players.green, EVENT_PLAYER_UNIT_DEATH)
+
+        TriggerAddCondition(trig_victory, Condition(
+            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
+
+        TriggerAddCondition(trig_victory, Condition(
+            CountPlayerStructures(players.green) <= 0))
+
         TriggerAddAction(trig_victory, function()
             TriggerSleepAction(1.5)
             CompleteQuest(quests.main, "|cffffcc00QUEST COMPLETED|r\nPurity")
@@ -46,9 +54,15 @@ do
             CustomVictoryBJ(players.player, true, true)
         end)
 
-        TriggerRegisterPlayerUnitEvent(trig_defeat, players.player, EVENT_PLAYER_UNIT_DEATH)
-        TriggerAddCondition(trig_defeat, Condition(IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
-        TriggerAddCondition(trig_defeat, Condition(CountPlayerStructures(players.player) <= 0))
+        TriggerRegisterPlayerUnitEvent(trig_defeat,
+            players.player, EVENT_PLAYER_UNIT_DEATH)
+
+        TriggerAddCondition(trig_defeat, Condition(
+            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE)))
+
+        TriggerAddCondition(trig_defeat, Condition(
+            CountPlayerStructures(players.player) <= 0))
+
         TriggerAddAction(trig_defeat, function()
             TriggerSleepAction(1.0)
             CustomDefeatBJ(players.player "Defeat!")

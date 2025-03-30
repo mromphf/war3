@@ -56,7 +56,7 @@ do
     function AssignQuest(quest)
         print(quest)
         if quest.data then
-            QuestMessageBJ(human_players_force or AllHumanPlayers(), bj_QUESTMESSAGE_DISCOVERED, quest.message)
+            QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_DISCOVERED, quest.message)
             QuestSetDiscovered(quest.data, true)
         end
     end
@@ -92,6 +92,7 @@ do
         LeaderboardDisplay(lb, false)
         LeaderboardAddItemBJ(players.player, lb, "Allies to Rescue",
             CountUnitsInGroup(GetUnitsOfPlayerAll(players.allies)))
+
         LeaderboardSetPlayerItemLabelColorBJ(players.player, lb, 0, 70, 70, 0)
         LeaderboardSetPlayerItemValueColorBJ(players.player, lb, 100, 100, 100, 0)
 

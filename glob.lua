@@ -92,7 +92,8 @@ do
     ---@param c conditionfunc
     ---@return integer
     function CountPlayerUnitsBy(p, c)
-        return CountUnitsInGroup(GetUnitsOfPlayerMatching(p, c))
+        return CountUnitsInGroup(
+                GetUnitsOfPlayerMatching(p, c))
     end
 
 
