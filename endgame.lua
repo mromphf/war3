@@ -1,17 +1,21 @@
+local Broadcast = require("broadcast")
+
 do
     local function trigsRescueQuest()
         t = CreateTrigger()
 
-        TriggerRegisterPlayerUnitEvent(t, players.allies, EVENT_PLAYER_UNIT_RESCUED)
+        TriggerRegisterPlayerUnitEvent(t,
+            players.allies, EVENT_PLAYER_UNIT_RESCUED)
 
         TriggerAddCondition(t, Condition(
-            CountUnitsInGroup(GetUnitsOfPlayerAll(players.allies)) <= 0))
+            CountUnitsInGroup(
+                GetUnitsOfPlayerAll(players.allies)) <= 0))
 
         TriggerAddAction(t, function()
             DisableTrigger(t)
             TriggerSleepAction(1.5)
-            CompleteQuest(quests.rescue, "|cffffcc00QUEST COMPLETED|r\nNature's Guardians")
             LeaderboardDisplay(leaderboard, false)
+            Broadcast.QuestComplete(quests.rescue)
         end)
     end
 
@@ -30,7 +34,7 @@ do
         TriggerAddAction(t, function()
             DisableTrigger(t)
             TriggerSleepAction(1.5)
-            CompleteQuest(quests.orange, "|cffffcc00QUEST COMPLETED|r\nComorbidity")
+            Broadcast.QuestComplete(quests.orange)
         end)
     end
 
@@ -49,7 +53,7 @@ do
 
         TriggerAddAction(trig_victory, function()
             TriggerSleepAction(1.5)
-            CompleteQuest(quests.main, "|cffffcc00QUEST COMPLETED|r\nPurity")
+            Broadcast.CompleteQuest(quests.main)
             TriggerSleepAction(3)
             CustomVictoryBJ(players.player, true, true)
         end)

@@ -21,7 +21,6 @@ do
         ---@field title string
         ---@field iconPath string
         ---@field description string
-        ---@field message string
         ---@field items table<integer, string>
         main = {
             data = nil,
@@ -30,7 +29,6 @@ do
             title = "Purity",
             iconPath = "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp",
             description = "The Scourge has brought its blight to Ashenvale under the leadership of the dreadlord Terrordar. Priestess Mira Whitemane leads the night elves on an offensive to drive away the demon's undead army.",
-            message = "|cffffcc00MAIN QUEST|r\nPurity - Destroy Terrordar's green Undead base",
             items = {
                 "Destroy Terrordar's green Undead base"
             }
@@ -42,7 +40,6 @@ do
             title = "Nature's Guardians",
             iconPath = "ReplaceableTextures\\CommandButtons\\BTNDryad.blp",
             description = "The Scourge's blight has stirred the creatures of the forest from their dens and burrows. The druids and dryads of Ashenvale will join your quest if you help them.",
-            message = "|cffffcc00OPTIONAL QUEST|r\nNature's Guardians - Rescue all Ashenvale Guardians",
             items = {
                 "Rescue all Ashenvale Guardians"
             }
@@ -54,20 +51,9 @@ do
             title = "Comorbidity",
             iconPath = "ReplaceableTextures\\CommandButtons\\BTNLichVersion2.blp",
             description = "The lich Rage Winterchill leads an ancillary force of undead encroaching upon the forest west of the river. While they represent a smaller threat, destroying their outpost may yield access to additional resources.",
-            message = "|cffffcc00OPTIONAL QUEST|r\nComorbidity - Destroy Rage Winterchill's orange Undead base",
             items = {
                 "Destroy Rage Winterchill's orange Undead base"
             }
-        }
-    }
-
-    hints = {
-        general = {
-            allies = "|cff32CD32HINT|r - Rescued allies will not consume food!"
-        },
-        new_unit = {
-            giant = "|cff87CEEBNEW UNIT AVAILABLE|r\nMountain Giants",
-            chimera = "|cff87CEEBNEW UNIT AVAILABLE|r\nChimeras"
         }
     }
 

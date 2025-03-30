@@ -1,3 +1,6 @@
+local Broadcast = require("broadcast")
+
+
 do
     ---@type leaderboard
     leaderboard = nil
@@ -6,7 +9,7 @@ do
     local MAX_PLAYERS = 15
 
     ---@type force
-    local human_players_force
+    local human_players
 
     ---@type boolean
     local is_acquired_mountain_giant
@@ -44,20 +47,18 @@ do
     end
 
     ---@param q QuestDefinition
-    ---@param msg string
-    function CompleteQuest(q, msg)
+    function CompleteQuest(q)
         if q.data then
             QuestSetCompleted(q.data, true)
-            QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_COMPLETED, msg)
+            Broadcast.QuestComplete(q)
         end
     end
 
     ---@param quest QuestDefinition
     function AssignQuest(quest)
-        print(quest)
         if quest.data then
-            QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_DISCOVERED, quest.message)
             QuestSetDiscovered(quest.data, true)
+            Broadcast.QuestDiscovered(quest)
         end
     end
 
@@ -105,13 +106,13 @@ do
 
     local function AssignRescueQuest()
         if IsQuestDiscovered(quests.rescue.data) then return end
-        leaderboard = InitLeaderboard(human_players_force)
+        leaderboard = InitLeaderboard(human_players)
 
         TriggerSleepAction(1.5)
         LeaderboardDisplay( leaderboard, true)
         AssignQuest(quests.rescue)
         TriggerSleepAction(bj_QUEUE_DELAY_HINT)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_HINT, hints.general.allies)
+        Broadcast.Hint("Rescued allies will not cost food!")
     end
 
     local function AssignOrangeQuest()
@@ -129,7 +130,7 @@ do
         SetPlayerAbilityAvailableBJ(true, FourCC("Rers"), players.player)
         SetPlayerAbilityAvailableBJ(true, FourCC("Rehs"), players.player)
         TriggerSleepAction(2)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, hints.new_unit.giant)
+        Broadcast.NewUnitAvailable("Mountain Giant")
     end
 
     local function OnChimeraRescue()
@@ -137,7 +138,7 @@ do
 
         SetPlayerUnitAvailableBJ(FourCC("edos"), true, players.player)
         TriggerSleepAction(2)
-        QuestMessageBJ(human_players_force, bj_QUESTMESSAGE_UNITAVAILABLE, hints.new_unit.chimera)
+        Broadcast.NewUnitAvailable("Chimera")
     end
 
     local function OnRescueAlly()
@@ -199,7 +200,7 @@ do
     end
 
     OnInit.final(function()
-        human_players_force = AllHumanPlayers()
+        human_players = AllHumanPlayers()
         for _, def in pairs(quests) do
             def.data = InitQuest(def)
         end
