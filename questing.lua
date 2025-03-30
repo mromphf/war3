@@ -1,6 +1,3 @@
-local Broadcast = require("broadcast")
-
-
 do
     ---@type leaderboard
     leaderboard = nil

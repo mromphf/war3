@@ -1,5 +1,5 @@
 do
-    local Broadcast = {}
+    Broadcast = {}
 
     ---@param unitname string
     function Broadcast.NewUnitAvailable(unitname)
@@ -25,6 +25,4 @@ do
         QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_COMPLETED,
             "|cffffcc00QUEST COMPLETED|r\n" .. q.title)
     end
-
-    return Broadcast
 end

@@ -1,5 +1,3 @@
-local Broadcast = require("broadcast")
-
 do
     local function trigsRescueQuest()
         t = CreateTrigger()
