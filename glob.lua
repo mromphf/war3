@@ -57,6 +57,30 @@ do
         }
     }
 
+    ---@type table<string, string>
+    items = {
+        mantle = "rin1",
+        claws3 = "rat3",
+        claws8 = "rat9",
+        pring1 = "rde0",
+        pring2 = "rde1",
+        print3 = "rde2",
+        penrg = "penr"
+    }
+
+    spells = {
+        ud = {
+            aura_vamp = "AUav",
+            carrion_swarm = "AUcs",
+            dark_ritual = "AUdr",
+            death_decay = "AUdd",
+            frost_armor = "AUfu",
+            frost_nova = "AUfn",
+            inferno = "AUin",
+            sleep = "AUsl",
+        }
+    }
+
     ---@param cmd string
     ---@param units table<number, unit>
     function DispatchUnits(units, cmd)

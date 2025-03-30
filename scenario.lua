@@ -32,37 +32,67 @@ do
         diff = GetGameDifficulty()
 
         if diff == MAP_DIFFICULTY_EASY then
+
             SetPlayerHandicap(players.green, 0.8)
             SetPlayerHandicap(players.orange, 0.8)
             SetPlayerHandicapXP(players.player, 0.85)
 
         elseif diff == MAP_DIFFICULTY_NORMAL then
+
             SetHeroLevel(units.lich, 5, false)
             SetHeroLevel(units.dreadlord, 7, false)
             SetPlayerHandicapXP(players.player, 0.5)
 
-            LearnSkills(units.lich, "AUdr", "AUfn", "AUfu")
-            LearnSkills(units.dreadlord, "AUav", "AUin")
+            LearnSkills(units.lich,
+                spells.ud.dark_ritual,
+                spells.ud.frost_nova,
+                spells.ud.frost_armor
+            )
 
-            GiveItems(units.lich, "rin1")
-            GiveItems(units.dreadlord, "rde0", "rat3")
+            LearnSkills(units.dreadlord,
+                spells.ud.aura_vamp,
+                spells.ud.inferno
+            )
+
+            GiveItems(units.lich,
+                items.mantle)
+
+            GiveItems(units.dreadlord,
+                items.pring1, items.claws3)
 
 
         elseif diff == MAP_DIFFICULTY_HARD or
                 diff == MAP_DIFFICULTY_INSANE then
+
             SetResourceAmount(units.mines.player, 10000)
             SetPlayerHandicapXP(players.player, 0.5)
             SetHeroLevel(units.lich, 10, false)
             SetHeroLevel(units.dreadlord, 10, false)
 
             LearnSkills(units.lich,
-                "AUdr", "AUdr", "AUdr", "AUfn", "AUfn", "AUfu", "AUfu", "AUdd")
+                spells.ud.dark_ritual,
+                spells.ud.dark_ritual,
+                spells.ud.dark_ritual,
+                spells.ud.frost_nova,
+                spells.ud.frost_nova,
+                spells.ud.frost_armor,
+                spells.ud.frost_armor,
+                spells.ud.death_decay
+            )
 
             LearnSkills(units.dreadlord,
-                "AUav", "AUsl", "AUcs", "AUcs", "AUin")
+                spells.ud.aura_vamp,
+                spells.ud.sleep,
+                spells.ud.carrion_swarm,
+                spells.ud.carrion_swarm,
+                spells.ud.inferno
+            )
 
-            GiveItems(units.lich, "rde1", "rin1")
-            GiveItems(units.dreadlord, "rde2", "rat9", "penr")
+            GiveItems(units.lich,
+                items.pring1, items.mantle)
+
+            GiveItems(units.dreadlord,
+                items.pring3, items.claws9, items.penrg)
         end
 
         SuspendHeroXP(units.dreadlord, true)
