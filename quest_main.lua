@@ -1,5 +1,5 @@
 do
-    local function TrigsQuest()
+    local function TrigsAssignQuest()
         local trig = CreateTrigger()
 
         TriggerRegisterTimerEventSingle(trig,
@@ -23,8 +23,11 @@ do
         end))
 
         TriggerAddAction(trig, function()
+            DisableTrigger(trig)
+
             TriggerSleepAction(1.5)
             CompleteQuest(quests.green)
+
             TriggerSleepAction(3)
             CustomVictoryBJ(players.player, true, true)
         end)
@@ -42,13 +45,15 @@ do
         end))
 
         TriggerAddAction(trig, function()
+            DisableTrigger(trig)
+
             TriggerSleepAction(1.0)
             CustomDefeatBJ(players.player, "Defeat!")
         end)
     end
 
     OnInit.trig(function()
-        TrigsQuest()
+        TrigsAssignQuest()
         TrigsVictory()
         TrigsDefeat()
     end)
