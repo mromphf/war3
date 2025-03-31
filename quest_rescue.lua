@@ -33,8 +33,7 @@ do
         SetPlayerAbilityAvailableBJ(true, FourCC("Rers"), players.player)
         SetPlayerAbilityAvailableBJ(true, FourCC("Rehs"), players.player)
 
-        TriggerSleepAction(2)
-        Broadcast.NewUnitAvailable("Mountain Giant")
+        Broadcast.NewUnitAvailable("Mountain Giant", 2)
     end
 
     local function OnChimeraRescue()
@@ -43,9 +42,7 @@ do
         acquired_chimera = true
 
         SetPlayerUnitAvailableBJ(FourCC("edos"), true, players.player)
-        TriggerSleepAction(2)
-
-        Broadcast.NewUnitAvailable("Chimera")
+        Broadcast.NewUnitAvailable("Chimera", 2)
     end
 
     local function RegisterRescue()
@@ -79,12 +76,13 @@ do
         TriggerAddAction(trig, function()
             DisableTrigger(trig)
 
-            TriggerSleepAction(1.5)
-            LeaderboardDisplay(leaderboard, true)
-            AssignQuest(quests.rescue)
+            Broadcast.Hint("Rescued allies do not cost food!",
+                bj_QUEUE_DELAY_HINT)
 
-            TriggerSleepAction(bj_QUEUE_DELAY_HINT)
-            Broadcast.Hint("Rescued allies will not cost food!")
+            StartNewTimer(1.5, function()
+                LeaderboardDisplay(leaderboard, true)
+                AssignQuest(quests.rescue)
+            end)
         end)
     end
 
@@ -101,9 +99,11 @@ do
 
         TriggerAddAction(trig, function()
             DisableTrigger(trig)
-            TriggerSleepAction(1.5)
-            LeaderboardDisplay(leaderboard, false)
-            CompleteQuest(quests.rescue)
+
+            StartNewTimer(1.5, function()
+                LeaderboardDisplay(leaderboard, false)
+                CompleteQuest(quests.rescue)
+            end)
         end)
     end
 

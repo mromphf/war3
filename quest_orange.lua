@@ -1,4 +1,3 @@
-
 do
     ---@type boolean
     local quest_unassigned = true
@@ -17,8 +16,9 @@ do
             quest_unassigned = false
 
             DisableTrigger(trig)
-            TriggerSleepAction(2)
-            AssignQuest(quests.orange)
+            StartNewTimer(2.0, function()
+                AssignQuest(quests.orange)
+            end)
         end)
     end
 
@@ -35,8 +35,9 @@ do
 
         TriggerAddAction(trig, function()
             DisableTrigger(trig)
-            TriggerSleepAction(1.5)
-            CompleteQuest(quests.orange)
+            StartNewTimer(1.5, function()
+                CompleteQuest(quests.orange)
+            end)
         end)
     end
 

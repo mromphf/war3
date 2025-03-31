@@ -47,8 +47,9 @@ do
         TriggerAddAction(trig, function()
             DisableTrigger(trig)
 
-            TriggerSleepAction(1.0)
-            CustomDefeatBJ(players.player, "Defeat!")
+            StartNewTimer(1.0, function()
+                CustomDefeatBJ(players.player, "Defeat!")
+            end)
         end)
     end
 
