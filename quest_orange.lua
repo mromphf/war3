@@ -9,8 +9,9 @@ do
         TriggerRegisterPlayerUnitEvent(trig,
             players.orange, EVENT_PLAYER_UNIT_DEATH)
 
-        TriggerAddCondition(trig, Condition(
-            quest_unassigned))
+        TriggerAddCondition(trig, Condition(function()
+            return quest_unassigned
+        end))
 
         TriggerAddAction(trig, function()
             quest_unassigned = false
@@ -27,10 +28,10 @@ do
         TriggerRegisterPlayerUnitEvent(trig,
             players.orange, EVENT_PLAYER_UNIT_DEATH)
 
-        TriggerAddCondition(trig, Condition(
-            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-            CountPlayerStructures(players.orange) <= 0
-        ))
+        TriggerAddCondition(trig, Condition(function()
+            return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+                    CountPlayerStructures(players.orange) <= 0
+        end ))
 
         TriggerAddAction(trig, function()
             DisableTrigger(trig)

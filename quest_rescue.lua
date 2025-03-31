@@ -94,9 +94,10 @@ do
         TriggerRegisterPlayerUnitEvent(trig,
             players.allies, EVENT_PLAYER_UNIT_RESCUED)
 
-        TriggerAddCondition(trig, Condition(
-            CountUnitsInGroup(
-                GetUnitsOfPlayerAll(players.allies)) <= 0))
+        TriggerAddCondition(trig, Condition(function()
+            return CountUnitsInGroup(
+                    GetUnitsOfPlayerAll(players.allies)) <= 0
+        end))
 
         TriggerAddAction(trig, function()
             DisableTrigger(trig)

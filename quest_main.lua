@@ -12,15 +12,15 @@ do
     end
 
     local function TrigsVictory()
-        trig = CreateTrigger()
+        local trig = CreateTrigger()
 
         TriggerRegisterPlayerUnitEvent(trig,
             players.green, EVENT_PLAYER_UNIT_DEATH)
 
-        TriggerAddCondition(trig, Condition(
-            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-            CountPlayerStructures(players.green) <= 0
-        ))
+        TriggerAddCondition(trig, Condition(function()
+            return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+                    CountPlayerStructures(players.green) <= 0
+        end))
 
         TriggerAddAction(trig, function()
             TriggerSleepAction(1.5)
@@ -31,19 +31,19 @@ do
     end
 
     local function TrigsDefeat()
-        trig = CreateTrigger()
+        local trig = CreateTrigger()
 
         TriggerRegisterPlayerUnitEvent(trig,
             players.player, EVENT_PLAYER_UNIT_DEATH)
 
-        TriggerAddCondition(trig, Condition(
-            IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-            CountPlayerStructures(players.player) <= 0
-        ))
+        TriggerAddCondition(trig, Condition(function()
+            return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
+                    CountPlayerStructures(players.player) <= 0
+        end))
 
         TriggerAddAction(trig, function()
             TriggerSleepAction(1.0)
-            CustomDefeatBJ(players.player "Defeat!")
+            CustomDefeatBJ(players.player, "Defeat!")
         end)
     end
 
