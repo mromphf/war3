@@ -17,8 +17,9 @@ do
     ---@return integer
     function CountPlayerStructures(p)
         return CountUnitsInGroup(
-            GetUnitsOfPlayerMatching(p, Condition(
-                IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE))))
+            GetUnitsOfPlayerMatching(p, Condition(function()
+                return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE)
+            end)))
     end
 
 
