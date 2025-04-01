@@ -107,8 +107,8 @@ do
         end)
     end
 
-    OnInit.trig(function()
-        InitLeaderboard()
+    OnInit.final(function()
+        leaderboard = InitLeaderboard()
         RegisterRescue()
         RegisterAssignment()
         RegisterCompletion()
