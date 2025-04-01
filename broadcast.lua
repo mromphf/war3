@@ -2,21 +2,15 @@ do
     Broadcast = {}
 
     ---@param unitname string
-    ---@param delay? number | nil
-    function Broadcast.NewUnitAvailable(unitname, delay)
-        StartNewTimer(math.max(delay, 0), function()
-            QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_UNITAVAILABLE,
-                "|cff87CEEBNEW UNIT AVAILABLE|r\n" .. unitname)
-        end)
+    function Broadcast.NewUnitAvailable(unitname)
+        QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_UNITAVAILABLE,
+            "|cff87CEEBNEW UNIT AVAILABLE|r\n" .. unitname)
     end
 
     ---@param msg string
-    ---@param delay? number | nil
-    function Broadcast.Hint(msg, delay)
-        StartNewTimer(math.max(delay, 0), function()
-            QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_HINT,
-                "|cff32CD32HINT|r: " .. msg)
-        end)
+    function Broadcast.Hint(msg)
+        QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_HINT,
+            "|cff32CD32HINT|r - " .. msg)
     end
 
     ---@param q QuestDefinition
