@@ -4,8 +4,7 @@ do
     ---@param cmd string
     ---@param units table<number, unit>
     function DispatchUnits(units, cmd)
-        if not (units and cmd and
-                cmd_str[cmd]) then return end
+        if not units or not cmd_str[cmd] then return end
 
         for _, unit in ipairs(units) do
             IssueImmediateOrderBJ(unit, cmd)
@@ -40,10 +39,10 @@ do
     ---@param gold integer
     ---@param lumber integer
     function InitResources(p, gold, lumber)
-        if not p then return end
-
-        SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, math.max(gold, 0))
-        SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, math.max(lumber, 0))
+        if p then
+            SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, math.max(gold, 0))
+            SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, math.max(lumber, 0))
+        end
     end
 
 
@@ -66,8 +65,6 @@ do
     ---@param u unit
     ---@param ... string
     function LearnSkills(u, ...)
-        if not UnitAlive(u) then return end
-
         for _, skill_code in pairs({...}) do
             IncUnitAbilityLevel(u,
                 FourCC(skill_code))
