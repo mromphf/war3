@@ -18,7 +18,10 @@ do
     function CountPlayerStructures(p)
         return CountUnitsInGroup(
             GetUnitsOfPlayerMatching(p, Condition(function()
-                return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE)
+                local fUnit = GetFilterUnit()
+
+                return IsUnitAliveBJ(fUnit) and
+                       IsUnitType(fUnit, UNIT_TYPE_STRUCTURE)
             end)))
     end
 
@@ -74,7 +77,7 @@ do
 
 
     --- Give items to a hero.
-    --- Further items will be discarded
+    --- Extra items will be discarded
     --- once the hero's inventory is full.
     ---@param u unit
     ---@param ... string
@@ -99,7 +102,7 @@ do
     function StartNewTimer(seconds, callback)
         local t = CreateTimer()
 
-        TimerStart(t, math.max(seconds, 0), false, function()
+        TimerStart(t, seconds, false, function()
             callback()
             DestroyTimer(t)
         end)

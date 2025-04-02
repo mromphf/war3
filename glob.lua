@@ -123,7 +123,7 @@ do
         }
     end
 
-    OnInit.global(InitPlayers)
+    OnInit.final(InitPlayers)
     OnInit.final(InitUnits)
     OnInit.final(function()
         for _, def in pairs(quests) do
