@@ -29,7 +29,7 @@ do
     end
 
     local function InitDifficulty()
-        diff = GetGameDifficulty()
+        local diff = GetGameDifficulty()
 
         if diff == MAP_DIFFICULTY_EASY then
 

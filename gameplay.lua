@@ -17,7 +17,7 @@ do
     ---@return integer
     function CountPlayerStructures(p)
         return CountUnitsInGroup(
-            GetUnitsOfPlayerMatching(p, Condition(function()
+            GetUnitsOfPlayerMatching(p, Filter(function()
                 local fUnit = GetFilterUnit()
 
                 return IsUnitAliveBJ(fUnit) and
@@ -26,15 +26,15 @@ do
     end
 
 
-    --- Count units matching a predicate.
+    --- Count units matching a predicate filter.
     ---@param p player
-    ---@param c conditionfunc
+    ---@param f filterfunc
     ---@return integer
-    function CountPlayerUnitsBy(p, c)
-        if not p or not c then return 0 end
+    function CountPlayerUnitsBy(p, f)
+        if not p or not f then return 0 end
 
         return CountUnitsInGroup(
-                GetUnitsOfPlayerMatching(p, c))
+                GetUnitsOfPlayerMatching(p, f))
     end
 
 

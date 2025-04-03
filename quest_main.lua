@@ -19,17 +19,19 @@ do
 
         TriggerAddCondition(trig, Condition(function()
             return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-                    CountPlayerStructures(players.green) <= 0
+                    (CountPlayerStructures(players.green) <= 0)
         end))
 
         TriggerAddAction(trig, function()
             DisableTrigger(trig)
 
-            TriggerSleepAction(1.5)
-            CompleteQuest(quests.green)
+            StartNewTimer(1.5, function()
+                CompleteQuest(quests.main)
+            end)
 
-            TriggerSleepAction(3)
-            CustomVictoryBJ(players.player, true, true)
+            StartNewTimer(3, function()
+                CustomVictoryBJ(players.player, true, true)
+            end)
         end)
     end
 
@@ -41,7 +43,7 @@ do
 
         TriggerAddCondition(trig, Condition(function()
             return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-                    CountPlayerStructures(players.player) <= 0
+                    (CountPlayerStructures(players.player) <= 0)
         end))
 
         TriggerAddAction(trig, function()

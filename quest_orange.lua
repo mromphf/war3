@@ -30,7 +30,7 @@ do
 
         TriggerAddCondition(trig, Condition(function()
             return IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) and
-                    CountPlayerStructures(players.orange) <= 0
+                    (CountPlayerStructures(players.orange) <= 0)
         end ))
 
         TriggerAddAction(trig, function()
@@ -41,7 +41,7 @@ do
         end)
     end
 
-    OnInit.trig(function()
+    OnInit.final(function()
         RegisterQuestAssignment()
         RegisterQuestComplete()
     end)
