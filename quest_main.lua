@@ -55,7 +55,7 @@ do
         end)
     end
 
-    OnInit.trig(function()
+    OnInit.final(function()
         TrigsAssignQuest()
         TrigsVictory()
         TrigsDefeat()
