@@ -4,7 +4,7 @@ do
     ---@param cmd string
     ---@param units table<number, unit>
     function DispatchUnits(units, cmd)
-        if not units or not cmd_str[cmd] then return end
+        if not units then return end
 
         for _, unit in ipairs(units) do
             IssueImmediateOrderBJ(unit, cmd)
@@ -50,15 +50,18 @@ do
     end
 
 
-    --- Establishes each provided player as
-    --- ALLIANCE_PASSIVE with Neutral Hostile
+    --- Establishes each player as
+    --- ALLIANCE_PASSIVE with Neutral Hostile (the creeps)
     ---@param ... player
     function AllyWithNeutral(...)
-        for _, plyr in pairs({...}) do
-            SetPlayerAlliance(plyr, players.neutral_hostile,
+        local creeps = Player(PLAYER_NEUTRAL_AGGRESSIVE)
+
+        for _, player in pairs({...}) do
+
+            SetPlayerAlliance(player, creeps,
                 ALLIANCE_PASSIVE, true)
 
-            SetPlayerAlliance(players.neutral_hostile, plyr,
+            SetPlayerAlliance(creeps, player,
                 ALLIANCE_PASSIVE, true)
         end
     end
