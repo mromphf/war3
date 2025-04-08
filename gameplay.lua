@@ -14,7 +14,7 @@ do
 
     --- Count structures owned by player
     ---@param p player
-    ---@return integer
+    ---@return number
     function CountPlayerStructures(p)
         return CountUnitsInGroup(
             GetUnitsOfPlayerMatching(p, Filter(function()
@@ -29,7 +29,7 @@ do
     --- Count units matching a predicate filter.
     ---@param p player
     ---@param f filterfunc
-    ---@return integer
+    ---@return number
     function CountPlayerUnitsBy(p, f)
         if not p or not f then return 0 end
 
@@ -40,8 +40,8 @@ do
 
     --- Set player's gold and lumber.
     ---@param p player
-    ---@param gold integer
-    ---@param lumber integer
+    ---@param gold number
+    ---@param lumber number
     function InitResources(p, gold, lumber)
         if p then
             SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, math.max(gold, 0))

@@ -21,7 +21,7 @@ do
         ---@field title string
         ---@field iconPath string
         ---@field description string
-        ---@field items table<integer, string>
+        ---@field items table<number, string>
         main = {
             data = nil,
             required = true,
